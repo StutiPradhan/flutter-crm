@@ -66,13 +66,13 @@ class _ProjectInState extends State<ProjectIn> {
 
       if (isComplete) {
         // If the current stage is complete, set the color to blue
-        return Color.fromARGB(255, 85, 204, 247);
+        return Color.fromARGB(255, 37, 149, 190);
       } else if (!isComplete && prevStageComplete) {
         // If the current stage is not complete but the previous one is, set the color to green
-        return Color.fromARGB(255, 98, 226, 69);
+        return Color.fromARGB(255, 69, 186, 43);
       } else {
         // Otherwise, set the color to grey
-        return Color.fromARGB(255, 176, 176, 176);
+        return Color.fromARGB(255, 98, 98, 98);
       }
     }
 
@@ -153,7 +153,7 @@ class _ProjectInState extends State<ProjectIn> {
                           // )
                           color: Colors.white),
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: width * 0.02, vertical: height * 0.01),
+                        padding: EdgeInsets.symmetric(horizontal: 3, vertical: height * 0.01),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -273,7 +273,7 @@ class _ProjectInState extends State<ProjectIn> {
                         Container(
                             decoration: BoxDecoration(color: Color.fromARGB(255, 227, 230, 230), borderRadius: BorderRadius.circular(5)),
                             child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: width * 0.02, vertical: height * 0.01),
+                              padding: EdgeInsets.symmetric(horizontal: 3, vertical: height * 0.01),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -296,7 +296,7 @@ class _ProjectInState extends State<ProjectIn> {
                         Container(
                             decoration: BoxDecoration(color: Color.fromARGB(255, 227, 230, 230), borderRadius: BorderRadius.circular(5)),
                             child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: width * 0.02, vertical: height * 0.01),
+                              padding: EdgeInsets.symmetric(horizontal: 3, vertical: height * 0.01),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -361,15 +361,18 @@ class _ProjectInState extends State<ProjectIn> {
                               });
                             },
                             child: Container(
-                                width: getColorForStage(0) == Color.fromARGB(255, 98, 226, 69) ? 150 : 80,
-                                decoration: BoxDecoration(color: getColorForStage(0), borderRadius: BorderRadius.only(topRight: Radius.circular(30), bottomRight: Radius.circular(30))),
+                                decoration: BoxDecoration(color: getColorForStage(0), borderRadius: BorderRadius.only(topRight: Radius.circular(0), bottomRight: Radius.circular(0))),
                                 child: Padding(
-                                  padding: EdgeInsets.all(16.0),
-                                  child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: Text(prettifyStageName[this.projects["stages"][0]["name"]] ?? [this.projects["stages"][0]["name"]].toString())),
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Text(
+                                    prettifyStageName[this.projects["stages"][0]["name"]] ?? [this.projects["stages"][0]["name"]].toString(),
+                                    softWrap: false,
+                                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                                  ),
                                 )),
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: width * 0.02),
+                            padding: EdgeInsets.symmetric(horizontal: 3),
                             child: InkWell(
                               onTap: () {
                                 setState(() {
@@ -384,11 +387,14 @@ class _ProjectInState extends State<ProjectIn> {
                                 });
                               },
                               child: Container(
-                                  width: getColorForStage(1) == Color.fromARGB(255, 98, 226, 69) ? 150 : 80,
-                                  decoration: BoxDecoration(color: getColorForStage(1), borderRadius: BorderRadius.only(topRight: Radius.circular(30), bottomRight: Radius.circular(30))),
+                                  decoration: BoxDecoration(color: getColorForStage(1), borderRadius: BorderRadius.only(topRight: Radius.circular(0), bottomRight: Radius.circular(0))),
                                   child: Padding(
-                                    padding: EdgeInsets.all(16.0),
-                                    child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: Text(prettifyStageName[this.projects["stages"][1]["name"]] ?? [this.projects["stages"][1]["name"]].toString())),
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text(
+                                      prettifyStageName[this.projects["stages"][1]["name"]] ?? [this.projects["stages"][1]["name"]].toString(),
+                                      softWrap: false,
+                                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                                    ),
                                   )),
                             ),
                           ),
@@ -406,15 +412,18 @@ class _ProjectInState extends State<ProjectIn> {
                               });
                             },
                             child: Container(
-                                width: getColorForStage(2) == Color.fromARGB(255, 98, 226, 69) ? 150 : 80,
-                                decoration: BoxDecoration(color: getColorForStage(2), borderRadius: BorderRadius.only(topRight: Radius.circular(30), bottomRight: Radius.circular(30))),
+                                decoration: BoxDecoration(color: getColorForStage(2), borderRadius: BorderRadius.only(topRight: Radius.circular(0), bottomRight: Radius.circular(0))),
                                 child: Padding(
-                                  padding: EdgeInsets.all(16.0),
-                                  child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: Text(prettifyStageName[this.projects["stages"][2]["name"]] ?? [this.projects["stages"][2]["name"]].toString())),
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Text(
+                                    prettifyStageName[this.projects["stages"][2]["name"]] ?? [this.projects["stages"][2]["name"]].toString(),
+                                    softWrap: false,
+                                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                                  ),
                                 )),
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: width * 0.02),
+                            padding: EdgeInsets.symmetric(horizontal: 3),
                             child: InkWell(
                               onTap: () {
                                 setState(() {
@@ -429,11 +438,14 @@ class _ProjectInState extends State<ProjectIn> {
                                 });
                               },
                               child: Container(
-                                  width: getColorForStage(3) == Color.fromARGB(255, 98, 226, 69) ? 150 : 80,
-                                  decoration: BoxDecoration(color: getColorForStage(3), borderRadius: BorderRadius.only(topRight: Radius.circular(30), bottomRight: Radius.circular(30))),
+                                  decoration: BoxDecoration(color: getColorForStage(3), borderRadius: BorderRadius.only(topRight: Radius.circular(0), bottomRight: Radius.circular(0))),
                                   child: Padding(
-                                    padding: EdgeInsets.all(16.0),
-                                    child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: Text(prettifyStageName[this.projects["stages"][3]["name"]] ?? [this.projects["stages"][3]["name"]].toString())),
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text(
+                                      prettifyStageName[this.projects["stages"][3]["name"]] ?? [this.projects["stages"][3]["name"]].toString(),
+                                      softWrap: false,
+                                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                                    ),
                                   )),
                             ),
                           ),
@@ -451,11 +463,14 @@ class _ProjectInState extends State<ProjectIn> {
                               });
                             },
                             child: Container(
-                                width: getColorForStage(4) == Color.fromARGB(255, 98, 226, 69) ? 150 : 80,
-                                decoration: BoxDecoration(color: getColorForStage(4), borderRadius: BorderRadius.only(topRight: Radius.circular(30), bottomRight: Radius.circular(30))),
+                                decoration: BoxDecoration(color: getColorForStage(4), borderRadius: BorderRadius.only(topRight: Radius.circular(0), bottomRight: Radius.circular(0))),
                                 child: Padding(
-                                  padding: EdgeInsets.all(16.0),
-                                  child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: Text(prettifyStageName[this.projects["stages"][4]["name"]] ?? [this.projects["stages"][4]["name"]].toString())),
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Text(
+                                    prettifyStageName[this.projects["stages"][4]["name"]] ?? [this.projects["stages"][4]["name"]].toString(),
+                                    softWrap: false,
+                                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                                  ),
                                 )),
                           ),
                         ],

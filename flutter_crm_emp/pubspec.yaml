@@ -57,6 +57,7 @@ dependencies:
   flutter_hooks: ^0.20.0
   fl_query_hooks: ^1.0.0
   rxdart: ^0.27.7
+  neat_periodic_task: ^2.0.1
 
 dev_dependencies:
   flutter_test:

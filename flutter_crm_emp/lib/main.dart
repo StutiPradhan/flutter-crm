@@ -9,14 +9,12 @@ import 'package:fl_query/fl_query.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:neat_periodic_task/neat_periodic_task.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 import "package:http/http.dart" as http;
-// import 'package:firebase_core/firebase_core.dart';
-// import 'firebase_options.dart';
-// import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:rxdart/rxdart.dart';
+
 
 const fetchAgenda1HourPeriodicBgTaskKey = "fetchAgenda1HourPeriodicBgTaskKey";
 
@@ -128,7 +126,7 @@ Future<void> main() async {
 
   // final messaging = FirebaseMessaging.instance;
 
- // final settings = await messaging.requestPermission(
+  // final settings = await messaging.requestPermission(
   //   alert: true,
   //   announcement: false,
   //   badge: true,
@@ -138,7 +136,14 @@ Future<void> main() async {
   //   sound: true,
   // );
 
-  //debugPrint('💃💃💃💃💃 Permission granted: ${settings.authorizationStatus}');
+  // debugPrint('💃💃💃💃💃 Permission granted: ${settings.authorizationStatus}');
+
+  //String? token = await messaging.getToken();
+
+  // 🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸
+  //if (token != null) await makeTokenKnown(token);
+
+//  debugPrint('💃💃💃💃💃💃 Registration Token=$token');
 
   //to here
   runApp(MyApp(isLoggedIn: await isLoggedIn()));
@@ -154,11 +159,35 @@ Future<void> main() async {
   await fetchAgendaAndScheduleNotif();
   await uploadBackgroundLocation();
 
-  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
+  if (Platform.isAndroid) {
+    Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
 
-  Workmanager().registerPeriodicTask(fetchAgenda1HourPeriodicBgTaskKey, fetchAgenda1HourPeriodicBgTaskKey, constraints: Constraints(networkType: NetworkType.connected));
+    Workmanager().registerPeriodicTask(fetchAgenda1HourPeriodicBgTaskKey, fetchAgenda1HourPeriodicBgTaskKey, constraints: Constraints(networkType: NetworkType.connected));
 
-  Workmanager().registerPeriodicTask(backgroundLocationUpload, backgroundLocationUpload, constraints: Constraints(networkType: NetworkType.connected));
+    Workmanager().registerPeriodicTask(backgroundLocationUpload, backgroundLocationUpload, constraints: Constraints(networkType: NetworkType.connected));
+  }
+
+  if (Platform.isIOS) {
+    final scheduler = NeatPeriodicTaskScheduler(
+      interval: const Duration(minutes: 15),
+      name: 'scheduled-notif-bgloc',
+      timeout: const Duration(seconds: 20),
+      task: () async {
+        final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+
+        if (sharedPrefs.getBool("is_logged_in") ?? false) {
+          await uploadBackgroundLocation();
+        }
+
+        await fetchAgendaAndScheduleNotif();
+      },
+      minCycle: const Duration(seconds: 5),
+    );
+
+    scheduler.start();
+    await ProcessSignal.sigterm.watch().first;
+    await scheduler.stop();
+  }
 }
 
 Future<bool> isLoggedIn() async {
@@ -182,7 +211,7 @@ class MyApp extends StatelessWidget {
       child: OfflineGuard(
           child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'LipsumCRM',
+        title: 'MSME CRM',
         theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple), useMaterial3: true),
         home: isLoggedIn ? const BottomNavigationBarExample() : const LogIn(),
       )),
@@ -224,11 +253,9 @@ class OfflineGuard extends HookWidget {
 
   Widget _buildOfflineWidget() {
     return MaterialApp(
-      
       debugShowCheckedModeBanner: false,
-      title: 'LipsumCRM',
+      title: 'MSME CRM',
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-      
       home: const Padding(
         padding: EdgeInsets.all(32.0),
         child: SizedBox.expand(

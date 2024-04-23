@@ -6,9 +6,10 @@ import 'dart:io';
 import 'package:flutter_crm_emp/Login.dart';
 import 'package:flutter_crm_emp/dialogues/checkin_dialog.dart';
 import 'package:flutter_crm_emp/dialogues/checkout_dialog.dart';
-import 'package:flutter_crm_emp/pages/UserProfile/PassworkPage.dart';
-
+import 'package:flutter_crm_emp/main.dart';
+import 'package:flutter_crm_emp/pages/UserProfile/PasswordPage.dart';
 import 'package:flutter_crm_emp/pages/broadcastevent.dart';
+
 import 'package:fl_query_hooks/fl_query_hooks.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -107,7 +108,15 @@ class Emp_home extends HookWidget {
         isCheckedin.value = sharedPreferences.getBool("is_checked_in") ?? false;
       }
 
+      // void makeTokenKnownSideEffect() async {
+      //   final messaging = FirebaseMessaging.instance;
+      //   String? token = await messaging.getToken();
+      //   if (token != null) await makeTokenKnown(token);
+      //   debugPrint('💃💃💃💃💃💃 Registration Token=$token');
+      // }
+
       getCheckedInStateFromSharedPrefs();
+     // makeTokenKnownSideEffect();
       return null;
     }, []);
 
@@ -157,13 +166,13 @@ class Emp_home extends HookWidget {
     );
 
     return Scaffold(
-      key:_key,
+      key: _key,
       appBar: AppBar(
         centerTitle: true,
         automaticallyImplyLeading: false,
         actions: [Container()],
         title: const Text(
-          "LipsumCRM",
+          "MSME CRM",
           style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.black,
@@ -187,7 +196,7 @@ class Emp_home extends HookWidget {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Text(
-                                            "LipsumCRM",
+                                            "MSME CRM",
                                             style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700),
                                           ),
                                           InkWell(
@@ -270,6 +279,7 @@ class Emp_home extends HookWidget {
                                                             HttpHeaders.authorizationHeader: "Bearer ${sharedPrefs.getString("jwt")}",
                                                           });
 
+                                                      await uploadBackgroundLocation();
                                                       await sharedPrefs.setBool("is_checked_in", true);
                                                       isCheckedin.value = true;
                                                       checked_in();
@@ -543,7 +553,7 @@ class Emp_home extends HookWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PasswordPage(),
+                      builder: (context) => const PasswordPage(),
                     ));
               },
             ),
